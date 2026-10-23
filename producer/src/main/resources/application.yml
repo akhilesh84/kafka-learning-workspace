@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: kafka-producer
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      acks: all
+      retries: 3
+      properties:
+        enable.idempotence: true
+        max.in.flight.requests.per.connection: 5
+        linger.ms: 10
+        batch.size: 16384
+
+app:
+  topic-name: ${TOPIC_NAME:market-prices}
+  poll-interval-seconds: ${POLL_INTERVAL_SECONDS:3}
+  symbols: ${SYMBOLS:BTC-USD,ETH-USD,SOL-USD}
+
+management:
+  otlp:
+    metrics:
+      export:
+        enabled: true
+        url: ${OTEL_EXPORTER_OTLP_ENDPOINT:http://localhost:4318/v1/metrics}
+        step: 5s
+        resource-attributes:
+          service.name: kafka-producer
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics

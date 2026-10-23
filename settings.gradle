@@ -1,0 +1,5 @@
+rootProject.name = 'kafka-learning-workspace'
+
+include 'common'
+include 'producer'
+include 'consumer'

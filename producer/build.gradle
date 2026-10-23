@@ -1,0 +1,30 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+bootJar {
+    archiveFileName = 'producer-1.0.0-all.jar'
+}
+
+// Ensure compatibility with build scripts invoking fatJar or run
+tasks.register('fatJar') {
+    dependsOn 'bootJar'
+}
+
+tasks.register('run') {
+    dependsOn 'bootRun'
+}
+
+dependencies {
+    implementation project(':common')
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-otlp'
+    implementation 'com.github.loki4j:loki-logback-appender:1.5.2'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+}
+

@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: kafka-consumer
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: ${GROUP_ID:price-analytics-group}
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      max-poll-records: 50
+    listener:
+      ack-mode: manual_immediate
+
+app:
+  topic-name: ${TOPIC_NAME:market-prices}
+
+management:
+  otlp:
+    metrics:
+      export:
+        enabled: true
+        url: ${OTEL_EXPORTER_OTLP_ENDPOINT:http://localhost:4318/v1/metrics}
+        step: 5s
+        resource-attributes:
+          service.name: kafka-consumer
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics

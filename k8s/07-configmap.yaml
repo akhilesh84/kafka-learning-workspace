@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kafka-apps-config
+  namespace: kafka-learning
+data:
+  KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+  TOPIC_NAME: "market-prices"
+  GROUP_ID: "price-analytics-group"
+  POLL_INTERVAL_SECONDS: "3"
+  SYMBOLS: "BTC-USD,ETH-USD,SOL-USD"
+  OTEL_EXPORTER_OTLP_ENDPOINT: "http://otel-collector:4318/v1/metrics"
+  LOKI_HOST: "loki"
+  LOKI_PORT: "3100"
